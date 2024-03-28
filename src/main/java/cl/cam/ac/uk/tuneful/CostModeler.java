@@ -32,8 +32,10 @@ public class CostModeler {
 	Hashtable<String, Integer> n_executions;
 	private int MAX_N_EXEC = 3;
 	private String n_executionsPath;
+	Hashtable<String, ConfParam> paramRanges = null;
 
 	public CostModeler() {
+		paramRanges = TunefulFactory.getTunableParamsRange();
 		TUNEFUL_HOME = TunefulFactory.getTunefulHome(); // TODO: make configurable
 		SPEARMINT_FOLDER = "spearmint-lite";
 		MODEL_INPUT_PATH_BASE = TUNEFUL_HOME + "/" + SPEARMINT_FOLDER + "/";
@@ -138,7 +140,7 @@ public class CostModeler {
 
 	}
 
-	public SparkConf findCandidateConf(SparkConf conf, String appName) {
+	public Hashtable<String, String> findCandidateConf(String appName) {
 		// TODO: update to the EI instead
 		Hashtable<String, String> tunedConf = null;
 		if (n_executions.get(appName) > MAX_N_EXEC) // converge after this number of time
@@ -150,14 +152,9 @@ public class CostModeler {
 			runSpearmint(appName);
 			tunedConf = readPendingConf(appName);
 		}
-		SparkConf updatedConf = conf;
-		Set<String> keys = tunedConf.keySet();
-		for (String key : keys) {
-			updatedConf.set(key, tunedConf.get(key));
-		}
 		n_executions.put(appName, n_executions.get(appName) + 1);
 		Util.writeTable(n_executions, n_executionsPath);
-		return updatedConf;
+		return tunedConf;
 	}
 
 	private Hashtable<String, String> getBestConf(String appName) {
@@ -305,13 +302,18 @@ public class CostModeler {
 
 	private Hashtable<String, String> parseLine(String line, List<String> confParams, String appName) {
 
-		Hashtable<String, String> conf = new Hashtable<String, String>();
+		Hashtable<String, String> resultConf = new Hashtable<String, String>();
 		String[] splittedLine = line.split(" ");
 		for (int i = 0; i < confParams.size(); i++) {
-			conf.put(confParams.get(i), splittedLine[i + 2]);
-			System.out.println(">>> candidate conf >>> " + confParams.get(i) + " >>>> " + splittedLine[i + 2]);
+			ConfParam currentParam = paramRanges.get(confParams.get(i).trim());
+			String conf = splittedLine[i + 2];
+			if (currentParam.getType().equalsIgnoreCase("int") || currentParam.getType().equalsIgnoreCase("float")) {
+				conf += currentParam.getUnit();
+			}
+			resultConf.put(confParams.get(i), conf);
+			System.out.println(">>> candidate conf >>> " + confParams.get(i) + " >>>> " + conf);
 		}
-		return conf;
+		return resultConf;
 	}
 
 // get the tunable conf from SparkConf
