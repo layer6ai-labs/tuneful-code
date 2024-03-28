@@ -83,13 +83,13 @@ public class ConfigurationSampler {
 //			return getDefaultValue(paramName);
 //		else 
 		if (paramRanges.get(paramName).getType().equalsIgnoreCase("int")) {
-			return ((paramRanges.get(paramName).getRange()[0]
-					+ (paramRanges.get(paramName).getRange()[1] - paramRanges.get(paramName).getRange()[0]) / 2))
-					+ paramRanges.get(paramName).getUnit(); // start_range + range/2
+			int conf = (int) (paramRanges.get(paramName).getRange()[0]
+				+ (paramRanges.get(paramName).getRange()[1] - paramRanges.get(paramName).getRange()[0]) / 2);// start_range + range/2
+			return conf + paramRanges.get(paramName).getUnit(); 
 		} else if (paramRanges.get(paramName).getType().equalsIgnoreCase("float")) {
-			return ((paramRanges.get(paramName).getRange()[0]
-					+ (paramRanges.get(paramName).getRange()[1] - paramRanges.get(paramName).getRange()[0]) / 2.0))
-					+ paramRanges.get(paramName).getUnit();
+			double conf = (double) (paramRanges.get(paramName).getRange()[0]
+				+ (paramRanges.get(paramName).getRange()[1] - paramRanges.get(paramName).getRange()[0]) / 2.0);
+			return conf + paramRanges.get(paramName).getUnit();
 		}
 		return null;
 	}
