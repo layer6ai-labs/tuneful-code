@@ -30,27 +30,6 @@ public class TunefulListener extends SparkListener {
 		appName = applicationStart.appName().replaceAll(" ", ""); // get rid of any spaces in the appName
 
 		appStartTime = applicationStart.time();
-
-		// set the values in the sparkConf
-		if (!TunefulFactory.getSignificanceAnalyzer().isSigParamDetected(appName)) {
-			System.out.println(">>> Sig param are not detected yet ...");
-			// get the conf using SA
-			Hashtable<String, String> conf = TunefulFactory.getSignificanceAnalyzer().suggestNextConf(appName);
-
-			Set<String> keys = conf.keySet();
-			for (String key : keys) {
-				sparkConf.set(key, conf.get(key));
-				System.out.println(">>> " + key + " >>> " + conf.get(key));
-			}
-		}
-
-		else {
-			// get the conf using cost modeler
-			System.out.println(">>> Sig param detected ... get conf using cost modeler");
-			sparkConf = TunefulFactory.getCostModeler().findCandidateConf(sparkConf, appName);
-
-		}
-
 	}
 
 	@Override
