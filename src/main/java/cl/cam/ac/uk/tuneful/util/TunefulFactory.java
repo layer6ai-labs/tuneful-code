@@ -1,5 +1,6 @@
 package cl.cam.ac.uk.tuneful.util;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
@@ -76,7 +77,7 @@ public class TunefulFactory {
 				new String[] { "true", "false" }, ""));
 		paramsRange.put("spark.serializer",
 				new ConfParam("spark.serializer", "enum", new double[] { 0.0, 0.0 }, new String[] {
-						"org.apache.spark.serializerJavaSerializer", "org.apache.spark.serializer.KryoSerializer" },
+						"org.apache.spark.serializer.JavaSerializer", "org.apache.spark.serializer.KryoSerializer" },
 						""));
 
 		return paramsRange;
@@ -113,8 +114,12 @@ public class TunefulFactory {
 	}
 
 	public static String getTunefulHome() {
-		// TODO read from TUNEFUL_HOME env var or use default value
-		return "/home/ayat/ayat/tuneful";
+		String TUNEFUL_HOME =  System.getenv("HOME") + "/tuneful";
+		File directory = new File(TUNEFUL_HOME);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+		return TUNEFUL_HOME;
 	}
 
 	public static Hashtable<String , Integer> get_n_executions() {
