@@ -46,7 +46,7 @@ public class SignificanceAnalyzer {
 		TUNEFUL_HOME = TunefulFactory.getTunefulHome();
 		SA_SCRIPT_FILE = "SA.py";
 		n_SA_rounds = 2; // TODO: make configurable
-		n_samples_per_SA = 3; // samples per SA round
+		n_samples_per_SA = 10; // samples per SA round
 		current_SA_round = new Hashtable<String, Integer>();
 		n_executions = new Hashtable<String, Integer>();// number of WL executions
 		sigParamsNames = new Hashtable<String, List<String>>();

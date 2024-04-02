@@ -30,7 +30,7 @@ public class CostModeler {
 	private String TUNEFUL_HOME;
 	private String SPEARMINT_FOLDER;
 	Hashtable<String, Integer> n_executions;
-	private int MAX_N_EXEC = 3;
+	private int MAX_N_EXEC = 15;
 	private String n_executionsPath;
 	Hashtable<String, ConfParam> paramRanges = null;
 
