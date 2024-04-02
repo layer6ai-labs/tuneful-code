@@ -13,6 +13,9 @@ pip install numpy pandas scipy scikit-learn
 mvn clean package
 ```
 
+## Config Parameters
+I added tunable parameters as listed in the Tuneful paper. You may want to change parameter ranges depending on your cluster spec here https://github.com/layer6ai-labs/tuneful-code/blob/master/src/main/java/cl/cam/ac/uk/tuneful/util/TunefulFactory.java#L101
+
 ## Run with Hibench
 
 In Hibench, replace the following line at https://github.com/Intel-bigdata/HiBench/blob/master/bin/functions/workload_functions.sh#L220
