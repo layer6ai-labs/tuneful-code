@@ -11,7 +11,7 @@ public class Tuneful {
     public static void main( String[] args )
     {
         Hashtable<String, String> conf;
-        String appName = "ScalaWordCount"; // TODO: take from stdin
+        String appName = args[0];
 
 		// set the values in the sparkConf
 		if (!TunefulFactory.getSignificanceAnalyzer().isSigParamDetected(appName)) {
