@@ -10,22 +10,13 @@ import cl.cam.ac.uk.tuneful.ConfigurationSampler;
 import cl.cam.ac.uk.tuneful.ConfigurationTuner;
 import cl.cam.ac.uk.tuneful.CostModeler;
 import cl.cam.ac.uk.tuneful.SignificanceAnalyzer;
-import cl.cam.ac.uk.tuneful.wl.characterization.WorkloadCharacterizer;
-import cl.cam.ac.uk.tuneful.wl.characterization.WorkloadMonitor;
 
 public class TunefulFactory {
 	static ConfigurationTuner tuner = null;
-	static WorkloadCharacterizer characterizer = null;
-	static WorkloadMonitor monitor = null;
 	static ConfigurationSampler configurationSampler = null;
 	static SignificanceAnalyzer significanceAnalyzer = null;
-	static HttpConnector connector = new HttpConnector();
 	static Hashtable<String, Integer>n_executions = null;// number of WL executions
 	static String n_executionsPath = TunefulFactory.getTunefulHome() + "/n_executions.ser";
-
-	public static HttpConnector getHttpConnector() {
-		return connector;
-	}
 
 	public static ConfigurationTuner getConfigurationTuner() {
 		if (tuner == null) {
@@ -33,22 +24,6 @@ public class TunefulFactory {
 
 		}
 		return tuner;
-	}
-
-	public static WorkloadCharacterizer getWorkloadCharacterizer() {
-		if (characterizer == null) {
-			characterizer = new WorkloadCharacterizer();
-
-		}
-		return characterizer;
-	}
-
-	public static WorkloadMonitor getWorkloadMonitor() {
-		if (monitor == null) {
-			monitor = new WorkloadMonitor();
-
-		}
-		return monitor;
 	}
 
 	public static CostModeler getCostModeler() {
