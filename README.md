@@ -29,6 +29,7 @@ into
         java -cp ~/{path-to-tuneful}/target/tuneful-0.0.1-SNAPSHOT-jar-with-dependencies.jar cl.cam.ac.uk.tuneful.Tuneful {app-name}
         LIB_JARS="$LIB_JARS --jars ~/{path-to-tuneful}/target/tuneful-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
         SPARK_CONF=`cat ~/tuneful/spconfig`
+        SPARK_CONF="$SPARK_CONF --conf spark.extraListeners=cl.cam.ac.uk.tuneful.TunefulListener"
         SUBMIT_CMD="${SPARK_HOME}/bin/spark-submit ${LIB_JARS} --properties-file ${SPARK_PROP_CONF} ${SPARK_CONF} --class ${CLS} --master ${SPARK_MASTER} ${YARN_OPTS} ${SPARKBENCH_JAR} $@"
 ```
 
